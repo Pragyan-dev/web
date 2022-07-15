@@ -24,6 +24,16 @@ var _supplierRoutes = _interopRequireDefault(require("./routes/supplierRoutes.js
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
+  app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
+} else {
+  app.get('/', (req, res) => {
+    res.send("API is running");
+  });
+}
+
+
 _dotenv.default.config('./../abc.env');
 
 (0, _db.default)();
@@ -46,14 +56,6 @@ const _dirname = _path.default.resolve();
 
 app.use('/uploads', _express.default.static(_path.default.join(_dirname, '/uploads')));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
-  app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
-} else {
-  app.get('/', (req, res) => {
-    res.send("API is running");
-  });
-}
 
 app.use(_errorMiddlware.notFound);
 app.use(_errorMiddlware.errorHandler);
