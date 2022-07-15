@@ -30,15 +30,7 @@ _dotenv.default.config('./../abc.env');
 
 (0, _db.default)();
 const app = (0, _express.default)();
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
-  app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
-} else {
-  app.get('/', (req, res) => {
-    res.send("API is running");
-  });
-}
+app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
 
 if (process.env.NODE_ENV === 'development') {
   app.use((0, _morgan.default)('dev'));
@@ -59,7 +51,7 @@ app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_I
 const _dirname = _path.default.resolve();
 
 app.use('/uploads', _express.default.static(_path.default.join(_dirname, '/uploads')));
-
+ app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
 
 app.use(_errorMiddlware.notFound);
 app.use(_errorMiddlware.errorHandler);
