@@ -31,10 +31,6 @@ _dotenv.default.config('./../abc.env');
 (0, _db.default)();
 const app = (0, _express.default)();
 
-if (process.env.NODE_ENV === 'development') {
-  app.use((0, _morgan.default)('dev'));
-}
-
 if (process.env.NODE_ENV === 'production') {
   app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
   app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
@@ -43,6 +39,12 @@ if (process.env.NODE_ENV === 'production') {
     res.send("API is running");
   });
 }
+
+if (process.env.NODE_ENV === 'development') {
+  app.use((0, _morgan.default)('dev'));
+}
+
+
 
 
 app.use(_express.default.json());
