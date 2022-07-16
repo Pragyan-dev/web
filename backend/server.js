@@ -54,7 +54,7 @@ app.use('/uploads', _express.default.static(_path.default.join(_dirname, '/uploa
 
 if (process.env.NODE_ENV === 'production') {
   app.use(_express.default.static(_path.default.join(_dirname, '/frontend/build')));
-  app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname, 'frontend', 'build', 'index.html')));
+  app.get('*', (req, res) => res.sendFile(_path.default.resolve(_dirname,  '../frontend/build', 'index.html')));
 } else {
   app.get('/', (req, res) => {
     res.send("API is running");
